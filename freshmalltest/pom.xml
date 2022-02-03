@@ -12,6 +12,7 @@
         <module>freshmall-commons</module>
         <module>freshmall-content-service</module>
         <module>freshmall-pojo</module>
+        <module>freshmall-protal-web</module>
     </modules>
 
     <properties>
