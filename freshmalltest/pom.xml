@@ -13,6 +13,7 @@
         <module>freshmall-content-service</module>
         <module>freshmall-pojo</module>
         <module>freshmall-protal-web</module>
+        <module>freshmall-admin-web</module>
     </modules>
 
     <properties>
