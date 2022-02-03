@@ -1,4 +1,4 @@
-package freshmall.mapper;
+package com.freshmall.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.freshmall.pojo.TbContentCategory;

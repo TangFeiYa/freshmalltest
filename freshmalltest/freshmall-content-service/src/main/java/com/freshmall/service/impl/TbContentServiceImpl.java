@@ -1,4 +1,4 @@
-package freshmall.service.impl;
+package com.freshmall.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.freshmall.mapper.TbContentMapper;

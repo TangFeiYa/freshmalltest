@@ -1,4 +1,4 @@
-package freshmall.controller;
+package com.freshmall.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.freshmall.pojo.TbContent;

@@ -1,4 +1,4 @@
-package freshmall.controller;
+package com.freshmall.controller;
 
 import com.freshmall.service.TbContentCategoryService;
 import com.freshmall.utils.ResponseVo;

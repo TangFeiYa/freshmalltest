@@ -1,4 +1,4 @@
-package freshmall;
+package com.freshmall;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
