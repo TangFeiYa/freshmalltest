@@ -1,0 +1,3 @@
+com\freshmall\ProtalWebApp.class
+com\freshmall\controller\IndexController.class
+com\freshmall\client\ContentClient.class
