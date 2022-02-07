@@ -39,4 +39,14 @@ public class ContentCategoryController {
         PageUtils<TbContentCategory> pageUtils = new PageUtils<>(pageQuery.getPageIndex(),pageQuery.getPageSize(),total,pages,records);
         return ResultCommon.success(ResultCode.SUCCESS,pageUtils);
     }
+
+    @RequestMapping("add")
+    public ResultCommon add(@RequestBody TbContentCategory tbContentCategory){
+        boolean flag = tbContentCategoryService.save(tbContentCategory);
+        if(flag){
+            return ResultCommon.success(ResultCode.SUCCESS);
+        }else{
+            return ResultCommon.success(ResultCode.FAIL);
+        }
+    }
 }

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>内容分类</title>
+<!-- Page basic information -->
+<meta name="description" content="{{adminConfig.description}}">
+<meta name="keywords" content="{{adminConfig.keywords}}">
+<meta name="author" content="{{adminConfig.author}}">
+<!-- Page icon information -->
+<link rel="shortcut icon" href="/favicon.ico" />
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<!-- Bootstrap -->
+<link rel="stylesheet" href="/plugins/bootstrap/css/bootstrap.min.css">
+<!-- Font-Awesome -->
+<link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="/plugins/ionicons/css/ionicons.min.css">
+<!-- Roboto -->
+<link rel="stylesheet" href="/plugins/roboto/css/roboto.min.css">
+<!-- AdminLTE -->
+<link rel="stylesheet" href="/plugins/adminlte/css/adminlte.min.css">
+<!-- AdminLTE skins -->
+<link rel="stylesheet" href="/plugins/adminlte/css/skins/_all-skins.min.css">
+<!-- zeroModal -->
+<link rel="stylesheet" href="/plugins/zeroModal/css/zeroModal.min.css">
+<!-- iCheck -->
+<link rel="stylesheet" href="/plugins/iCheck/all.min.css">
+<!-- Paging -->
+<link rel="stylesheet" href="/plugins/tm-pagination/css/pagination.min.css">
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script type="text/javascript" src="/plugins/html5shiv/html5shiv.min.js"></script>
+  <script type="text/javascript" src="/plugins/respond/respond.min.js"></script>
+<![endif]-->
+</head>
+<body class="hold-transition {{adminConfig.theme}} sidebar-mini">
+	<!-- Page Wrapper Start -->
+	<div class="wrapper">
+		<!-- Box Header Start -->
+		<div class="box-header with-border">
+			<ul class="breadcrumb" style="margin-bottom: 0px;">
+				<li><a href="javascript:;" onclick="window.location.href='welcome.html';">后台首页</a></li>
+				<li><a href="javascript:;" onclick="window.location.reload();">内容分类</a></li>
+			</ul>
+		</div>
+		<!-- Box Header End -->
+
+		<!-- Box Body Start -->
+		<div class="box-body">
+			<!-- Tool Start -->
+			<div class="clearfix" style="margin-bottom: 10px">
+				<div class="pull-left">
+					<div class="input-group input-group-sm">
+						<div class="btn-group">
+							<button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#addModal" ng-click="entity={}">
+								<i class="fa fa-plus"></i> 新建
+							</button>
+							<button type="button" class="btn btn-default" title="删除" onclick="deleteSelectList()">
+								<i class="fa fa-trash"></i> 删除
+							</button>
+							<button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();">
+								<i class="fa fa-refresh"></i> 刷新
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="pull-right">
+					<form id="queryForm" action="/content_category/page/1" method="post">
+						<div class="input-group input-group-sm" style="width: 150px;">
+							<input type="text" class="form-control pull-right" placeholder="分类名称" name="name" th:value="${name}"/>
+							<div class="input-group-btn">
+								<button type="submit" class="btn btn-default">
+									<i class="fa fa-search"></i>
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- Tool End -->
+			
+			<!-- Data Start -->
+			<table class="table table-bordered table-striped table-hover dataTable">
+				<thead>
+					<tr>
+						<td style="vertical-align: middle; text-align: center;"></td>
+						<th style="vertical-align: middle; text-align: left;">分类主键</th>
+						<th style="vertical-align: middle; text-align: left;">分类名称</th>
+						
+						<th style="vertical-align: middle; text-align: center;">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="contentCategory:${pageUtils.records}">
+						<td style="vertical-align: middle; text-align: center;">
+							<input type="checkbox" name="ckbox" th:value="${contentCategory.id}" style="width: 16px; height: 16px; cursor: pointer;"></td>
+						<td style="vertical-align: middle;" th:text="${contentCategory.id}">XXX</td>
+						<td style="vertical-align: middle;" th:text="${contentCategory.name}">XXX</td>
+						<td style="vertical-align: middle; text-align: center;">
+							<button class="btn btn-sm bg-light-blue color-palette" data-toggle="modal" data-target="#editModal" th:onclick="|findById(${contentCategory.id})|">修改</button>
+							<button class="btn btn-sm bg-red color-palette" th:onclick="|deleteById(${contentCategory.id})|">删除</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 分页组件 -->
+			<div class="row">
+				<div class="col-sm-6"><div class="dataTables_paginate paging_bootstrap" id="sample-table_paginate">
+					<ul class="pagination">
+						<li class="prev" th:if="${pageUtils.pageIndex>1}"><a href="#" th:onclick="'goPage('+${pageUtils.pageIndex-1}+')'">上一页</a></li>
+						<li th:each="num:${pageUtils.numbers}" th:class="${pageUtils.pageIndex==num}? active"><a href="#" th:onclick="'goPage('+${num}+')'" th:text="${num}">1</a></li>
+						<li class="next" th:if="${pageUtils.pageIndex<pageUtils.pageCount}"><a href="#" th:onclick="'goPage('+${pageUtils.pageIndex+1}+')'">下一页</a></li>
+						<li class="next"><a href="#" th:text="|共${pageUtils.pageCount}页|">XX</a></li>
+						<li class="next"><a href="#" th:text="|共${pageUtils.totalCount}条|">XX</a></li>
+					</ul>
+				</div>
+				</div>
+			</div>
+			<!-- 分页组件 -->
+			<!-- Data End -->
+			<!-- Paging Start -->
+			<div class="clearfix">
+				<div class="pull-left">
+					<tm-pagination conf="paginationConf"></tm-pagination>
+				</div>
+				<div class="pull-right" style="height: 70px; line-height: 70px;">
+					<button class="btn btn-sm btn-default" onclick="window.print();">打印</button>
+				</div>
+			</div>
+			<!-- Paging End -->
+		</div>
+		<!-- Box Body End -->
+
+		<!-- Modal Start -->
+		<form id="addForm">
+		<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">
+							<small>分类新增</small>
+						</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-bordered table-striped table-hover dataTable" width="800px" style="margin-bottom: 0px;">
+							<tr>
+								<td style="vertical-align: middle; text-align: center;">分类名称</td>
+								<td style="vertical-align: middle; text-align: left;">
+									<input type="text" class="form-control" name="name"  placeholder="分类名称"></td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default pull-left" data-dismiss="modal" aria-hidden="true">关闭</button>
+						<button type="button" class="btn btn-success pull-right" data-dismiss="modal" aria-hidden="true" onclick="saveData()">新增</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		</form>
+
+		<form id="updateForm">
+		<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">
+							<small>分类编辑</small>
+						</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-bordered table-striped table-hover dataTable" width="800px" style="margin-bottom: 0px;">
+							<tr>
+								<td style="vertical-align: middle; text-align: center;">分类名称</td>
+								<td style="vertical-align: middle; text-align: left;">
+									<input type="hidden" name="id" id="id"/>
+									<input type="text" class="form-control" id="name" name="name" placeholder="分类名称"></td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default pull-left" data-dismiss="modal" aria-hidden="true">关闭</button>
+						<button type="button" class="btn btn-success pull-right" data-dismiss="modal" aria-hidden="true" onclick="updateData()">更新</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		</form>
+		<!-- Modal End -->
+	</div>
+	<!-- Page Wrapper End -->
+	<!-- JQuery -->
+	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script type="text/javascript" src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<!-- SlimScroll -->
+	<script type="text/javascript" src="/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+	<!-- FastClick -->
+	<script type="text/javascript" src="/plugins/fastclick/fastclick.min.js"></script>
+	<!-- AdminLTE -->
+	<script type="text/javascript" src="/plugins/adminlte/js/adminlte.min.js"></script>
+	<!-- zeroModal -->
+	<script type="text/javascript" src="/plugins/zeroModal/js/zeroModal.min.js"></script>
+	<!-- iCheck -->
+	<script type="text/javascript" src="/plugins/iCheck/icheck.min.js"></script>
+	<!-- AngularJS -->
+	<script type="text/javascript" src="/plugins/angular/angular.min.js"></script>
+	<!-- Paging -->
+	<script type="text/javascript" src="/plugins/tm-pagination/js/pagination.min.js"></script>
+	<!-- AdminConfig -->
+	<script type="text/javascript" src="/js/adminConfig.js"></script>
+	<!-- Base -->
+	<script type="text/javascript" src="/js/base_pagination.js"></script>
+	<!-- Service -->
+	<script type="text/javascript" src="/js/service/tbContentCategoryService.js"></script>
+	<!-- Controller -->
+	<script type="text/javascript" src="/js/controller/baseController.js"></script>
+	<script type="text/javascript" src="/js/controller/tbContentCategoryController.js"></script>
+    <script type="text/javascript">
+
+		//跳转页面
+		function goPage(pageIndex) {
+			$("#queryForm").attr("action","/content_category/page/"+pageIndex);
+			$("#queryForm").submit();
+		}
+
+		function saveData(){
+			var data=$("#addForm").serialize();
+			$.post("/content_category/add",data,function (result){
+				if(result.code==200){
+					alert("新增成功");
+					window.location.reload();
+				}else{
+					alert("服务器异常，稍后再试~");
+				}
+			});
+		}
+
+		function findById(id){
+			$.getJSON("/content_category/findOne/"+id,function(result){
+				if(result.code==200){
+					var data=result.data;
+					//alert(JSON.stringify(data));
+					$("#id").val(data.id);
+					$("#name").val(data.name);
+				}else{
+					alert("服务器异常，稍后再试~");
+				}
+			});
+		}
+
+		function updateData(){
+			var data=$("#updateForm").serialize()+"&_method=put";
+			$.post("/content_category/update",data,function (result){
+				if(result.code==200){
+					alert("更新成功");
+					window.location.reload();
+				}else{
+					alert("服务器异常，稍后再试~");
+				}
+			});
+		}
+
+		function deleteById(id){
+			if(confirm("确认要删除吗？")){
+				$.ajax({
+					url:"/content_category/delete/"+id,
+					dataType:"json",
+					type:"delete",
+					success:function (result) {
+						if(result.code==200){
+							alert("删除成功");
+							window.location.reload();
+						}else if(result.code==800){
+							alert("数据使用中，暂时不能删除~");
+						}else{
+							alert("服务器异常，稍后再试~");
+						}
+					}
+				});
+			}
+		}
+
+
+		function deleteSelectList(){
+			var ids=new Array();
+			var cks=$("[name='ckbox']:checked");
+			if(cks.length>0){
+				cks.each(function(index,element){
+					ids.push($(element).val());
+				});
+				//alert(ids.toString());
+				$.ajax({
+					url:"/content_category/deleteSelectList/"+ids.toString(),
+					dataType:"json",
+					type:"delete",
+					success:function (result) {
+						if(result.code==200){
+							alert("删除成功");
+							window.location.reload();
+						}else if(result.code==800){
+							alert(result.data);
+						}else{
+							alert("服务器异常，稍后再试~");
+						}
+					}
+				});
+			}else{
+				alert("请选中要删除的数据！");
+			}
+		}
+
+	</script>
+</body>
+</html>

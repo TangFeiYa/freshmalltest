@@ -22,8 +22,6 @@ import java.util.List;
 public class ContentController {
     @Autowired
     TbContentService tbContentService;
-    @Value("${server.port}")
-    String port;
     @GetMapping("list")
     public ResultCommon list(){
 //        log.info("我是广告服务，端口是:" + port);
