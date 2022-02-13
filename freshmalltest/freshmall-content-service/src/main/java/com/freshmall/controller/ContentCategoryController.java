@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -48,5 +50,33 @@ public class ContentCategoryController {
         }else{
             return ResultCommon.success(ResultCode.FAIL);
         }
+    }
+
+    @GetMapping("findOne/{id}")
+    public ResultCommon findOne(@PathVariable("id") Long id){
+        System.out.println(id);
+        return ResultCommon.success(ResultCode.SUCCESS,tbContentCategoryService.getById(id));
+    }
+
+    @RequestMapping("update")
+    public ResultCommon update(@RequestBody TbContentCategory tbContentCategory){
+        boolean flag = tbContentCategoryService.updateById(tbContentCategory);
+        if(flag){
+            return ResultCommon.success(ResultCode.SUCCESS);
+        }else{
+            return ResultCommon.success(ResultCode.FAIL);
+        }
+    }
+
+    @RequestMapping("deleteOne/{id}")
+    public ResultCommon deleteOne(@PathVariable("id") Long id){
+        return ResultCommon.success(ResultCode.SUCCESS,tbContentCategoryService.removeById(id));
+    }
+
+    @RequestMapping("deleteSelectList/{ids}")
+    public ResultCommon deleteSelectList(@PathVariable("ids") String ids){
+        String[] idArrays = ids.split(",");
+        List<String> idList = Arrays.asList(idArrays);
+        return ResultCommon.success(ResultCode.SUCCESS,tbContentCategoryService.removeByIds(idList));
     }
 }

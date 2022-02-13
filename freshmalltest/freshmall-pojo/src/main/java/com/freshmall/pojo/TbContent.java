@@ -58,6 +58,12 @@ public class TbContent {
     @TableField(value = "category_id")
     private Long categoryId;
 
+    /**
+     * 忽略字段
+     */
+    @TableField(exist = false)
+    private String categoryName;
+
     public static final String COL_ID = "id";
 
     public static final String COL_TITLE = "title";

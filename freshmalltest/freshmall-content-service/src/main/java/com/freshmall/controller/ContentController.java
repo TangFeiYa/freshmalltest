@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.freshmall.pojo.TbContent;
+import com.freshmall.service.TbContentCategoryService;
 import com.freshmall.service.TbContentService;
 import com.freshmall.utils.PageQuery;
 import com.freshmall.utils.PageUtils;
@@ -22,6 +23,9 @@ import java.util.List;
 public class ContentController {
     @Autowired
     TbContentService tbContentService;
+
+    @Autowired
+    TbContentCategoryService tbContentCategoryService;
     @GetMapping("list")
     public ResultCommon list(){
 //        log.info("我是广告服务，端口是:" + port);
@@ -38,12 +42,17 @@ public class ContentController {
     public ResultCommon<PageUtils<TbContent>> page(@RequestBody PageQuery pageQuery){
 //        log.info("服务端--查询的参数是:" + pageQuery);
         QueryWrapper<TbContent> queryWrapper=new QueryWrapper<>();
-        queryWrapper.like("name",pageQuery.getQueryDatas().get(0));
+        queryWrapper.like("title",pageQuery.getQueryDatas().get(0));
         queryWrapper.orderByDesc("id");
         IPage<TbContent> page=tbContentService.page(new Page<TbContent>(pageQuery.getPageIndex(),pageQuery.getPageSize()),queryWrapper);
         long total = page.getTotal();
         long pages = page.getPages();
         List<TbContent> records = page.getRecords();
+        for (TbContent record : records) {
+            Long categoryId = record.getCategoryId();
+            String categoryName = tbContentCategoryService.getById(categoryId).getName();
+            record.setCategoryName(categoryName);
+        }
         PageUtils<TbContent> pageUtils = new PageUtils<>(pageQuery.getPageIndex(),pageQuery.getPageSize(),total,pages,records);
         return ResultCommon.success(ResultCode.SUCCESS,pageUtils);
     }

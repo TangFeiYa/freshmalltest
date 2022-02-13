@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class ContentController {
     @Autowired
     ContentClient contentClient;
-    @GetMapping("page{pageIndex}")
+    @RequestMapping("page/{pageIndex}")
     public String page(@PathVariable("pageIndex") Long pageIndex,
                        @RequestParam(required = false,defaultValue = "8") Long pageSize,
                        @RequestParam(required = false,defaultValue = "") String title, Model model){
