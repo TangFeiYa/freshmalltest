@@ -16,13 +16,19 @@ public class ContentCategoryController {
     @Autowired
     ContentCategoryClient contentCategoryClient;
 
+    @GetMapping("list")
+    @ResponseBody
+    public ResultCommon<Object> list(){
+        return contentCategoryClient.list();
+    }
+
     @RequestMapping("page/{pageIndex}")
     public String page(@PathVariable("pageIndex") Long pageIndex,
                        @RequestParam(required = false,defaultValue = "8") Long pageSize,
                        @RequestParam(required = false,defaultValue = "") String name, Model model){
         PageQuery pageQuery = new PageQuery(pageIndex,pageSize,name);
         ResultCommon<PageUtils<TbContentCategory>> resultCommon = contentCategoryClient.page(pageQuery);
-        PageUtils pageUtils = (PageUtils) resultCommon.getData();
+        PageUtils<TbContentCategory> pageUtils = (PageUtils<TbContentCategory>) resultCommon.getData();
         model.addAttribute("pageUtils",pageUtils);
         model.addAttribute("name",name);
         return "tbContentCategory";
@@ -30,32 +36,32 @@ public class ContentCategoryController {
 
     @RequestMapping("add")
     @ResponseBody
-    public ResultCommon add(TbContentCategory tbContentCategory){
+    public ResultCommon<Object> add(TbContentCategory tbContentCategory){
         return contentCategoryClient.add(tbContentCategory);
     }
 
     @GetMapping("/findOne/{id}")
     @ResponseBody
-    public ResultCommon findOne(@PathVariable("id") Long id){
-        System.out.println(id);return contentCategoryClient.findOne(id);
+    public ResultCommon<Object> findOne(@PathVariable("id") Long id){
+        return contentCategoryClient.findOne(id);
     }
 
     @RequestMapping("update")
     @ResponseBody
-    public ResultCommon update(TbContentCategory tbContentCategory){
+    public ResultCommon<Object> update(TbContentCategory tbContentCategory){
         System.out.println(tbContentCategory);
         return contentCategoryClient.update(tbContentCategory);
     }
 
     @RequestMapping("/deleteOne/{id}")
     @ResponseBody
-    public ResultCommon deleteOne(@PathVariable("id") Long id){
+    public ResultCommon<Object> deleteOne(@PathVariable("id") Long id){
         return contentCategoryClient.deleteOne(id);
     }
 
     @RequestMapping("/deleteSelectList/{ids}")
     @ResponseBody
-    public ResultCommon deleteSelectList(@PathVariable("ids") String ids){
+    public ResultCommon<Object> deleteSelectList(@PathVariable("ids") String ids){
         return contentCategoryClient.deleteSelectList(ids);
     }
 }

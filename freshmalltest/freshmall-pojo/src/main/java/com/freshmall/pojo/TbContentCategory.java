@@ -2,6 +2,7 @@ package com.freshmall.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,4 +24,7 @@ public class TbContentCategory {
     * 分类名称（首页轮播）
     */
     private String name;
+
+    @TableLogic  //逻辑删除
+    private Integer deleted;
 }

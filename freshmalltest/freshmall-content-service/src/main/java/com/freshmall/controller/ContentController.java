@@ -12,7 +12,6 @@ import com.freshmall.utils.ResultCode;
 import com.freshmall.utils.ResultCommon;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,13 +37,18 @@ public class ContentController {
         return ResultCommon.success(ResultCode.SUCCESS,tbContentService.list(new QueryWrapper<TbContent>().eq("category_id",category_id)));
     }
 
+    /**
+     * 分页请求
+     * @param pageQuery 分页信息
+     * @return 返回分页
+     */
     @RequestMapping("page")
-    public ResultCommon<PageUtils<TbContent>> page(@RequestBody PageQuery pageQuery){
+    public ResultCommon page(@RequestBody PageQuery pageQuery){
 //        log.info("服务端--查询的参数是:" + pageQuery);
         QueryWrapper<TbContent> queryWrapper=new QueryWrapper<>();
         queryWrapper.like("title",pageQuery.getQueryDatas().get(0));
         queryWrapper.orderByDesc("id");
-        IPage<TbContent> page=tbContentService.page(new Page<TbContent>(pageQuery.getPageIndex(),pageQuery.getPageSize()),queryWrapper);
+        IPage<TbContent> page=tbContentService.page(new Page<>(pageQuery.getPageIndex(),pageQuery.getPageSize()),queryWrapper);
         long total = page.getTotal();
         long pages = page.getPages();
         List<TbContent> records = page.getRecords();
@@ -55,5 +59,55 @@ public class ContentController {
         }
         PageUtils<TbContent> pageUtils = new PageUtils<>(pageQuery.getPageIndex(),pageQuery.getPageSize(),total,pages,records);
         return ResultCommon.success(ResultCode.SUCCESS,pageUtils);
+    }
+
+    /**
+     * 增加单个广告
+     * @param tbContent 广告类
+     * @return 返回成功或失败
+     */
+    @PostMapping("add")
+    public ResultCommon add(@RequestBody TbContent tbContent){
+        boolean flag = tbContentService.save(tbContent);
+        if(flag){
+            return ResultCommon.success(ResultCode.SUCCESS);
+        }else{
+            return ResultCommon.fail(ResultCode.FAIL);
+        }
+    }
+
+    /**
+     * 通过id查询广告
+     * @param id 广告id
+     * @return 返回广告信息
+     */
+    @GetMapping("/findOne/{id}")
+    public ResultCommon findOne(@PathVariable("id") Long id){
+        return ResultCommon.success(ResultCode.SUCCESS,tbContentService.getById(id));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResultCommon delete(@PathVariable("id") Long id){
+        TbContent tbContent = tbContentService.getById(id);
+        if(tbContent.getStatus().equals("1")){
+            return ResultCommon.fail(ResultCode.FAIL);
+        }else{
+            boolean flag = tbContentService.removeById(id);
+            if(flag){
+                return ResultCommon.success(ResultCode.SUCCESS);
+            }else{
+                return ResultCommon.fail(ResultCode.FAIL);
+            }
+        }
+    }
+
+    @PostMapping("update")
+    public ResultCommon update(@RequestBody TbContent tbContent){
+        boolean flag = tbContentService.updateById(tbContent);
+        if(flag){
+            return ResultCommon.success(ResultCode.SUCCESS);
+        }else{
+            return ResultCommon.fail(ResultCode.FAIL);
+        }
     }
 }

@@ -1,9 +1,6 @@
 package com.freshmall.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -57,6 +54,9 @@ public class TbContent {
      */
     @TableField(value = "category_id")
     private Long categoryId;
+
+    @TableLogic  //逻辑删除
+    private Integer deleted;
 
     /**
      * 忽略字段

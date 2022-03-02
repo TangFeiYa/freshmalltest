@@ -36,7 +36,7 @@ public class TestFastDFS {
         //使用TrackerServer和StorageServer构造StorageClient对象
         StorageClient storageClient = new StorageClient(trackerServer, storageServer);
         //使用storageClient上传文件到服务器
-        String[] strings = storageClient.upload_file("C:\\test.png", "png", null);
+        String[] strings = storageClient.upload_file("E:\\123.png", "png", null);
         //上传成功会返回一个字符数组，分别为：文件所在组和文件在组中的位置及名称
         for(String s:strings){
             System.out.println(s);

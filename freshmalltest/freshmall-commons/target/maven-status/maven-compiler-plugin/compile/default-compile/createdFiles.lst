@@ -1,4 +1,6 @@
 com\freshmall\utils\PageQuery.class
 com\freshmall\utils\ResultCode.class
+com\freshmall\utils\SnowFlakeUtil.class
 com\freshmall\utils\ResultCommon.class
+com\freshmall\utils\FastDFSClientUtils.class
 com\freshmall\utils\PageUtils.class
