@@ -16,18 +16,18 @@ public interface ContentCategoryClient {
     @RequestMapping("/content_category/page")
     ResultCommon<PageUtils<TbContentCategory>> page(@RequestBody PageQuery pageQuery);
 
-    @RequestMapping("/content_category/add")
+    @PostMapping("/content_category/add")
     ResultCommon<Object> add(@RequestBody TbContentCategory tbContentCategory);
 
     @GetMapping("/content_category/findOne/{id}")
     ResultCommon<Object> findOne(@PathVariable("id") Long id);
 
-    @RequestMapping("/content_category/update")
+    @PutMapping("/content_category/update")
     ResultCommon<Object> update(@RequestBody TbContentCategory tbContentCategory);
 
-    @RequestMapping("/content_category/deleteOne/{id}")
+    @DeleteMapping("/content_category/deleteOne/{id}")
     ResultCommon<Object> deleteOne(@PathVariable("id") Long id);
 
-    @RequestMapping("/content_category/deleteSelectList/{ids}")
+    @DeleteMapping("/content_category/deleteSelectList/{ids}")
     ResultCommon<Object> deleteSelectList(@PathVariable("ids") String ids);
 }

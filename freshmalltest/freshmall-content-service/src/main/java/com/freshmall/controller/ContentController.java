@@ -101,7 +101,7 @@ public class ContentController {
         }
     }
 
-    @PostMapping("update")
+    @PutMapping("update")
     public ResultCommon update(@RequestBody TbContent tbContent){
         boolean flag = tbContentService.updateById(tbContent);
         if(flag){

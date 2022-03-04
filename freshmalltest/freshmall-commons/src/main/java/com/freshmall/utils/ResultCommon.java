@@ -20,18 +20,17 @@ public class ResultCommon<T> {
         this.msg = msg;
     }
 
-    public static ResultCommon success(ResultCode resultCode){
-        ResultCommon resultCommon = new ResultCommon(resultCode.getCode(), resultCode.getMsg());
-        return resultCommon;
+    public static ResultCommon<Object> success(ResultCode resultCode){
+        return new ResultCommon<>(resultCode.getCode(), resultCode.getMsg());
     }
 
-    public static ResultCommon success(ResultCode resultCode, Object data){
-        ResultCommon success = success(resultCode);
+    public static ResultCommon<Object> success(ResultCode resultCode, Object data){
+        ResultCommon<Object> success = success(resultCode);
         success.setData(data);
         return success;
     }
 
-    public static ResultCommon fail(ResultCode resultCode){
+    public static ResultCommon<Object> fail(ResultCode resultCode){
         return success(resultCode);
     }
 

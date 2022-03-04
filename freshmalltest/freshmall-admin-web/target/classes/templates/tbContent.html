@@ -181,14 +181,14 @@
 										<input type="button" onclick="uploadImageFile_add()" value="上传图片" style="float: right"/>
 									</div>
 									<div>
-										<img src="xx" id="upload_img_add" height="200px" width="100%" style="margin-top: 10px; border: 1px solid gray;">
+<!--										<img src="xx" id="upload_img_add" height="200px" width="100%" style="margin-top: 10px; border: 1px solid gray;">-->
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<td style="vertical-align: middle; text-align: center;">广告排序</td>
 								<td style="vertical-align: middle; text-align: left;">
-									<input type="text" class="form-control" name="sort" placeholder="内容排序"></td>
+									<input type="text" class="form-control" name="order" placeholder="内容排序"></td>
 							</tr>
 							<tr>
 								<td style="vertical-align: middle; text-align: center;">广告状态</td>
@@ -319,6 +319,7 @@
 	<!-- Controller -->
 	<script type="text/javascript" src="/js/controller/baseController.js"></script>
 	<script type="text/javascript" src="/js/controller/tbContentController.js"></script>
+		<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript">
 		//跳转页面
 		function goPage(pageIndex) {
@@ -371,7 +372,8 @@
 		}
 
 		function saveDatas(){
-			var data=$("#addForm").serialize();
+
+			var data=$("#addForm").serialize()+"&_Content-Type=application/json;charset=UTF-8";
 			$.post("/content/add",data,function (result){
 				if(result.code==200){
 					alert("新增成功");
@@ -380,13 +382,41 @@
 					alert("服务器异常，稍后再试~");
 				}
 			});
+		/*	var obj = {};
+			$.each(data,function(i,v){
+				obj[v.name] = v.value;
+			})
+			alert(obj);
+			$.ajax({
+				url:"/content/add",
+				type:"post",
+				data: data,
+				/!**
+				 *必须false才会自动加上正确的Content-Type
+				 *!/
+				contentType: "application/json;;charset=utf-8",
+				/!**
+				 * 必须false才会避开jQuery对 formdata 的默认处理
+				 * XMLHttpRequest会对 formdata 进行正确的处理
+				 *!/
+				// processData: false,
+				dataType: 'json',
+				success:function(result){
+					//alert(JSON.stringify(result));
+					if(result.code==200){
+						alert("新增成功");
+						window.location.reload();
+					}else{
+						alert("服务器异常，稍后再试~");
+					}
+				}
+			});*/
 		}
 
 		function findOneById(id){
 			$.getJSON("/content/findOne/"+id,function(result){
 				if(result.code==200){
 					var data=result.data;
-					//alert(JSON.stringify(data));
 					$("#id").val(data.id); //更新藏值
 					$("#title").val(data.title);
 					$("#url").val(data.url);

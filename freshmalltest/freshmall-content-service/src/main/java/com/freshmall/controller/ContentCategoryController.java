@@ -47,7 +47,7 @@ public class ContentCategoryController {
         return ResultCommon.success(ResultCode.SUCCESS,pageUtils);
     }
 
-    @RequestMapping("add")
+    @PostMapping("add")
     public ResultCommon add(@RequestBody TbContentCategory tbContentCategory){
         boolean flag = tbContentCategoryService.save(tbContentCategory);
         if(flag){
@@ -63,7 +63,7 @@ public class ContentCategoryController {
         return ResultCommon.success(ResultCode.SUCCESS,tbContentCategoryService.getById(id));
     }
 
-    @RequestMapping("update")
+    @PutMapping("update")
     public ResultCommon update(@RequestBody TbContentCategory tbContentCategory){
         boolean flag = tbContentCategoryService.updateById(tbContentCategory);
         if(flag){
@@ -73,7 +73,7 @@ public class ContentCategoryController {
         }
     }
 
-    @RequestMapping("deleteOne/{id}")
+    @DeleteMapping("deleteOne/{id}")
     public ResultCommon deleteOne(@PathVariable("id") Long id){
         List<TbContent> tbContents = tbContentService.list(new QueryWrapper<TbContent>().eq("category_id",id));
         if(tbContents.size()>0){
@@ -88,7 +88,7 @@ public class ContentCategoryController {
         }
     }
 
-    @RequestMapping("deleteSelectList/{ids}")
+    @DeleteMapping("deleteSelectList/{ids}")
     public ResultCommon deleteSelectList(@PathVariable("ids") String ids){
         String[] idArrays = ids.split(",");
         List<String> idList = Arrays.asList(idArrays);

@@ -4,3 +4,4 @@ com\freshmall\AdminWebApp.class
 com\freshmall\controller\ContentCategoryController.class
 com\freshmall\controller\ContentController.class
 com\freshmall\client\ContentClient.class
+com\freshmall\controller\UploadController.class

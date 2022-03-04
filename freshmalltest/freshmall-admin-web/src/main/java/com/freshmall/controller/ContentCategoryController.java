@@ -34,7 +34,7 @@ public class ContentCategoryController {
         return "tbContentCategory";
     }
 
-    @RequestMapping("add")
+    @PostMapping("add")
     @ResponseBody
     public ResultCommon<Object> add(TbContentCategory tbContentCategory){
         return contentCategoryClient.add(tbContentCategory);
@@ -46,20 +46,19 @@ public class ContentCategoryController {
         return contentCategoryClient.findOne(id);
     }
 
-    @RequestMapping("update")
+    @PutMapping("update")
     @ResponseBody
     public ResultCommon<Object> update(TbContentCategory tbContentCategory){
-        System.out.println(tbContentCategory);
         return contentCategoryClient.update(tbContentCategory);
     }
 
-    @RequestMapping("/deleteOne/{id}")
+    @DeleteMapping("/deleteOne/{id}")
     @ResponseBody
     public ResultCommon<Object> deleteOne(@PathVariable("id") Long id){
         return contentCategoryClient.deleteOne(id);
     }
 
-    @RequestMapping("/deleteSelectList/{ids}")
+    @DeleteMapping("/deleteSelectList/{ids}")
     @ResponseBody
     public ResultCommon<Object> deleteSelectList(@PathVariable("ids") String ids){
         return contentCategoryClient.deleteSelectList(ids);

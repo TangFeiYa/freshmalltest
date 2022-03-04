@@ -18,6 +18,9 @@ public interface ContentClient {
     @DeleteMapping("/content/delete/{id}")
     ResultCommon<Object> delete(@PathVariable("id") Long id);
 
-    @PostMapping("/content/update")
+    @PutMapping("/content/update")
     ResultCommon<Object> update(@RequestBody TbContent tbContent);
+
+    @PostMapping("/content/add")
+    ResultCommon<Object> add(@RequestBody TbContent tbContent);
 }
