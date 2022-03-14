@@ -12,6 +12,7 @@ import com.freshmall.utils.ResultCode;
 import com.freshmall.utils.ResultCommon;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,9 @@ import java.util.List;
 public class ContentController {
     @Autowired
     TbContentService tbContentService;
+
+    @Value("${server.port}")
+    String port;
 
     @Autowired
     TbContentCategoryService tbContentCategoryService;
@@ -34,6 +38,7 @@ public class ContentController {
     @GetMapping("listByCategoryId/{category_id}")
     public ResultCommon listByCategoryId(@PathVariable("category_id") Integer category_id){
 //        log.info("我是广告服务，端口是:" + port);
+        System.out.println("我是广告服务，端口是:" + port);
         return ResultCommon.success(ResultCode.SUCCESS,tbContentService.list(new QueryWrapper<TbContent>().eq("category_id",category_id)));
     }
 

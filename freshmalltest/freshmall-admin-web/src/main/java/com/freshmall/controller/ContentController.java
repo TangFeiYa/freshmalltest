@@ -21,8 +21,8 @@ public class ContentController {
 
     @RequestMapping("page/{pageIndex}")
     String page(@PathVariable("pageIndex") Long pageIndex,
-                       @RequestParam(required = false,defaultValue = "8") Long pageSize,
-                       @RequestParam(required = false,defaultValue = "") String title, Model model){
+                @RequestParam(required = false,defaultValue = "8") Long pageSize,
+                @RequestParam(required = false,defaultValue = "") String title, Model model){
         PageQuery pageQuery=new PageQuery(pageIndex,pageSize,title);
         ResultCommon<PageUtils<TbContent>> resultCommon = contentClient.page(pageQuery);
         PageUtils<TbContent> pageUtils = (PageUtils<TbContent>) resultCommon.getData();

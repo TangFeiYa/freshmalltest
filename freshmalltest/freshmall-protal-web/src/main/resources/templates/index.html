@@ -427,11 +427,8 @@
     
     <!-- 广告轮播区域开始 -->
     <div class="sub_banner">
-      <ul id="sub_banner">
-        <li> <a href="#"> <img data-original="img/page-index/sub_banner_01.png" /> </a> </li>
-        <li> <a href="#"> <img data-original="img/page-index/sub_banner_02.png" /> </a> </li>
-        <li> <a href="#"> <img data-original="img/page-index/sub_banner_03.png" /> </a> </li>
-        <li> <a href="#"> <img data-original="img/page-index/sub_banner_04.png" /> </a> </li>
+      <ul id="sub_banner" >
+        <li th:each="pic:${middle_loop_contents}"> <a href="#"> <img th:src="${pic.image}" /> </a> </li>
       </ul>
     </div>
     <!-- 广告轮播区域结束 --> 
