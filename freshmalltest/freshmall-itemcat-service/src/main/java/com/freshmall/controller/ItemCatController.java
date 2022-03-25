@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("itemCat")
+@RequestMapping("item-cat")
 public class ItemCatController {
     @Autowired
     TbItemCatService tbItemCatService;
@@ -37,8 +37,8 @@ public class ItemCatController {
     }
 
     @GetMapping("/list")
-    ResultCommon list(){
-        return ResultCommon.success(ResultCode.SUCCESS,tbItemCatService.list(null));
+    List<TbItemCat> list(){
+        return tbItemCatService.list(null);
     }
 
     @PostMapping("/add")
